@@ -14,15 +14,28 @@ public struct AccountMeta: Equatable, Codable, CustomDebugStringConvertible {
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         publicKey = try PublicKey(string: values.decode(String.self, forKey: .pubkey))
-        isSigner = if values.contains(.isSigner) {
-            try values.decode(Bool.self, forKey: .isSigner)
-        } else {
-            try values.decode(Bool.self, forKey: .signer)
-        }
-        isWritable = if values.contains(.isWritable) {
-            try values.decode(Bool.self, forKey: .isWritable)
-        } else {
-            try values.decode(Bool.self, forKey: .writable)
+        do {
+            isSigner = if values.contains(.isSigner) {
+                try values.decode(Bool.self, forKey: .isSigner)
+            } else {
+                try values.decode(Bool.self, forKey: .signer)
+            }
+            isWritable = if values.contains(.isWritable) {
+                try values.decode(Bool.self, forKey: .isWritable)
+            } else {
+                try values.decode(Bool.self, forKey: .writable)
+            }
+        }catch{
+            isSigner = if values.contains(.isSigner) {
+                try values.decode(Int.self, forKey: .isSigner) == 1
+            } else {
+                try values.decode(Int.self, forKey: .signer) == 1
+            }
+            isWritable = if values.contains(.isWritable) {
+                try values.decode(Int.self, forKey: .isWritable) == 1
+            } else {
+                try values.decode(Int.self, forKey: .writable) == 1
+            }
         }
     }
 
