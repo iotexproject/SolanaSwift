@@ -122,9 +122,9 @@ public class JSONRPCAPIClient: SolanaAPIClient {
     }
 
     public func getSignatureStatus(signature: String,
-                                   configs _: RequestConfiguration? = nil) async throws -> SignatureStatus
+                                   configs: RequestConfiguration? = nil) async throws -> SignatureStatus
     {
-        guard let result = try await getSignatureStatuses(signatures: [signature]).first else {
+        guard let result = try await getSignatureStatuses(signatures: [signature], configs: configs).first else {
             throw APIClientError.invalidResponse
         }
         return try result ?! APIClientError.invalidResponse
