@@ -119,6 +119,15 @@ public class JSONRPCAPIClient: SolanaAPIClient {
         }
         return blockhash
     }
+    
+    public func getLatestBlockhash(commitment: Commitment? = nil) async throws -> String {
+        let result: Rpc<Fee> = try await get(method: "getLatestBlockhash",
+                                             params: [RequestConfiguration(commitment: commitment)])
+        guard let blockhash = result.value.blockhash else {
+            throw APIClientError.blockhashNotFound
+        }
+        return blockhash
+    }
 
     public func getSignatureStatuses(signatures: [String],
                                      configs: RequestConfiguration? = nil) async throws -> [SignatureStatus?]
