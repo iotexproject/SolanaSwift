@@ -72,6 +72,7 @@ class BlockchainClientWithNativeSOLTests: XCTestCase {
 }
 
 private class MockAPIClient: SolanaAPIClient {
+
     let testCase: String
 
     init(testCase: String) {
@@ -204,6 +205,11 @@ private class MockAPIClient: SolanaAPIClient {
             fatalError()
         }
     }
+    
+    func getLatestBlockhash(commitment: SolanaSwift.Commitment?) async throws -> String {
+        return ""
+    }
+    
 
     func getMinimumBalanceForRentExemption(dataLength _: UInt64, commitment _: Commitment?) async throws -> UInt64 {
         2_039_280
