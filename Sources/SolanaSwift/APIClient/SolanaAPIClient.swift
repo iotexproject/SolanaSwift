@@ -121,6 +121,9 @@ public protocol SolanaAPIClient {
     ///
     func getFees(commitment: Commitment?) async throws -> Fee
 
+    // getFees is Deprecated
+    func getFeeForMessage(message: String, commitment: Commitment?) async throws -> FeeForMessage
+    
     /// Returns minimum balance required to make account rent exempt
     /// - Parameters:
     ///  - dataLength: account data length
